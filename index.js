@@ -4,12 +4,28 @@ const Brevo = require("@getbrevo/brevo");
 const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
-app.use(cors({ origin: "https://oussama-beghdi.netlify.app" }));
+
+const allowedOrigins = ["https://oussama-beghdi.netlify.app/", "http://localhost:5500"];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.log("❌ CORS refusé pour :", origin);
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+  })
+);
 app.use(express.json());
 
 const client = new Brevo.TransactionalEmailsApi();
 client.authentications["apiKey"].apiKey = process.env.BREVO_API_KEY;
-
+app.get("/", (req, res) => {
+  res.json({ message: "CORS OK ✅" });
+});
 app.post("/send-email", async (req, res) => {
   const { username, email, tel, message } = req.body;
 
@@ -34,5 +50,5 @@ app.post("/send-email", async (req, res) => {
     res.status(500).json({ message: "❌ Une erreur est survenue lors de l’envoi de l’e-mail." });
   }
 });
-
-app.listen(3000, () => console.log("Server started on http://localhost:3000"));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server started on ${PORT}`));
