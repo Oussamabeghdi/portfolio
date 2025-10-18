@@ -4,7 +4,7 @@ const Brevo = require("@getbrevo/brevo");
 const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
-app.use(cors({ origin: "http://localhost:5500" })); // ou mettre ton URL front
+app.use(cors({ origin: "https://oussama-beghdi.netlify.app" }));
 app.use(express.json());
 
 const client = new Brevo.TransactionalEmailsApi();
