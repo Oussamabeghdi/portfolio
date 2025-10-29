@@ -26,12 +26,13 @@ client.authentications["apiKey"].apiKey = process.env.BREVO_API_KEY;
 app.get("/", (req, res) => {
   res.json({ message: "CORS OK ✅" });
 });
+
 app.post("/send-email", async (req, res) => {
   const { username, email, tel, message } = req.body;
 
   try {
     const sendSmtpEmail = {
-      sender: { email: "mxzlatan754@gmail.com", name: "Ton Nom" },
+      sender: { email: "mxzlatan754@gmail.com", name: "Mon Portfolio" },
       to: [{ email: "ae.wbdb@gmail.com" }],
       subject: `Nouveau message de ${username}`,
       htmlContent: `
