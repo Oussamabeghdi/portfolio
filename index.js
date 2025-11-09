@@ -4,6 +4,8 @@ const Brevo = require("@getbrevo/brevo");
 const dotenv = require("dotenv");
 dotenv.config();
 const app = express();
+const trackRoutes = require("./routes/cv-track");
+app.use(trackRoutes);
 
 const allowedOrigins = ["https://oussama-beghdi.netlify.app", "http://localhost:5500"];
 
