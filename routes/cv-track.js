@@ -3,7 +3,10 @@ const router = express.Router();
 // const fs = require("fs");
 // const path = require("path");
 const mongoose = require("mongoose");
-mongoose.connect(process.env.MONGODB_URI);
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log("MongoDB connecté"))
+  .catch((err) => console.error("Erreur MongoDB :", err));
 const cvSchema = new mongoose.Schema({
   clicks: { type: Number, default: 0 },
 });
